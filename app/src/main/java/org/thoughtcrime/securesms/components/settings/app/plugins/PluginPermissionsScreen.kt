@@ -89,7 +89,7 @@ fun PluginPermissionsScreen(
           color = MaterialTheme.colorScheme.onSurfaceVariant
         )
       }
-      return@Scaffolds.Settings
+      return@Settings
     }
 
     AppSettingsLazyColumn(

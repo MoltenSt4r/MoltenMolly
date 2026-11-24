@@ -29,6 +29,7 @@ import org.thoughtcrime.securesms.conversation.ConversationHeaderCallbacks
 import org.thoughtcrime.securesms.conversation.ConversationHeaderView
 import org.thoughtcrime.securesms.conversation.ConversationItemDisplayMode
 import org.thoughtcrime.securesms.conversation.ConversationMessage
+import org.thoughtcrime.securesms.conversation.colors.ChatColors
 import org.thoughtcrime.securesms.conversation.colors.Colorizable
 import org.thoughtcrime.securesms.conversation.colors.Colorizer
 import org.thoughtcrime.securesms.conversation.mutiselect.MultiselectPart

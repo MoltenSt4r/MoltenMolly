@@ -165,7 +165,7 @@ class PluginHostBinder(
         while (c.moveToNext() && result.size < safeLimit) {
           if (idCol < 0) continue
           val id = c.getLong(idCol)
-          val recipient = Recipient.resolved(org.thoughtcrime.securesms.recipients.RecipientId.from(id))
+          val recipient = Recipient.resolved(org.signal.core.models.recipients.RecipientId.from(id))
           result.add(
             PluginContactDto(
               recipientId = recipient.id.serialize(),

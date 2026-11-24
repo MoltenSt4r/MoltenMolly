@@ -45,10 +45,6 @@ jobs:
         with:
           cache-read-only: true
 
-      - name: Build Docker image
-        run: docker compose build
-        working-directory: reproducible-builds
-
       - name: Export CI environment variables
         run: |
           cp -v "ci/$BUILD_ENV_FILE" .env
@@ -67,6 +63,10 @@ jobs:
           PACKAGE_ID: ${{ vars.CI_PACKAGE_ID }}
           BUILD_VARIANTS: ${{ vars.CI_BUILD_VARIANTS }}
           FORCE_INTERNAL_USER_FLAG: ${{ vars.CI_FORCE_INTERNAL_USER_FLAG }}
+
+      - name: Build Docker image
+        run: docker compose build
+        working-directory: reproducible-builds
 
       - name: Extract signing keys
         if: "env.HAVE_KEYSTORE == 'true'"
