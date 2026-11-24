@@ -42,7 +42,7 @@ class ChatWallpaperRepository {
     } else if (SignalStore.wallpaper().hasWallpaperSet()) {
       return Objects.requireNonNull(SignalStore.wallpaper().getWallpaper()).getAutoChatColors();
     } else {
-      return ChatColorsPalette.Bubbles.INSTANCE.getDefault(AppDependencies.application).withId(ChatColors.Id.Auto.INSTANCE);
+      return ChatColorsPalette.Bubbles.INSTANCE.getDefault(AppDependencies.getApplication()).withId(ChatColors.Id.Auto.INSTANCE);
     }
   }
 

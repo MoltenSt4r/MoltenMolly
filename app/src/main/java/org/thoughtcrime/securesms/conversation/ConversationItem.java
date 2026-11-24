@@ -1870,7 +1870,7 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
                          false,
                          conversationMessage.getQuoteMemberLabel());
 
-      quoteView.setChatColors(conversationRecipient.getChatColors());
+      quoteView.setChatColors(conversationRecipient.get().getChatColors());
       quoteView.setWallpaperEnabled(hasWallpaper);
       quoteView.setVisibility(View.VISIBLE);
       quoteView.setTextSize(TypedValue.COMPLEX_UNIT_SP, SignalStore.settings().getMessageQuoteFontSize(context));
