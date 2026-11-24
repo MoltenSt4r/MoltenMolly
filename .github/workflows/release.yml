@@ -11,7 +11,7 @@ on:
         type: string
 
 permissions:
-  contents: read # to fetch code (actions/checkout)
+  contents: write # to create draft releases and upload release assets
 
 env:
   TAG_REF: "${{ inputs.version || github.ref_name }}"
@@ -23,6 +23,8 @@ jobs:
     name: Build
     if: "github.event.base_ref != 'refs/heads/upstream-main'"
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read # to fetch code (actions/checkout)
 
     steps:
       - uses: actions/checkout@v6

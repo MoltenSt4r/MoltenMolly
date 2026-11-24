@@ -3,6 +3,9 @@ name: Tag Commit for Release
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write # to push version tags and trigger release uploads
+
 jobs:
   push_tag:
     name: Push version tag

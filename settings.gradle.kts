@@ -24,27 +24,26 @@ dependencyResolutionManagement {
     maven {
       url = uri(rootDir.resolve("prebuilts/ringrtc"))
       content {
+        includeModule("org.signal", "ringrtc-android")
         includeModule("im.molly", "ringrtc-android")
       }
     }
     maven {
       url = uri(rootDir.resolve("prebuilts/libsignal"))
       content {
+        includeModule("org.signal", "libsignal-client")
+        includeModule("org.signal", "libsignal-android")
         includeModule("im.molly", "libsignal-client")
         includeModule("im.molly", "libsignal-android")
       }
     }
     maven {
-      url = uri("https://dl.cloudsmith.io/public/mollyim/ringrtc/maven/")
+      name = "SignalBuildArtifacts"
+      url = uri("https://build-artifacts.signal.org/libraries/maven/")
       content {
-        includeModule("im.molly", "ringrtc-android")
-      }
-    }
-    maven {
-      url = uri("https://dl.cloudsmith.io/public/mollyim/libsignal/maven/")
-      content {
-        includeModule("im.molly", "libsignal-client")
-        includeModule("im.molly", "libsignal-android")
+        includeModule("org.signal", "libsignal-client")
+        includeModule("org.signal", "libsignal-android")
+        includeModule("org.signal", "ringrtc-android")
       }
     }
     maven {
@@ -83,8 +82,8 @@ if (libsignalClientPath is String) {
   includeBuild(rootDir.resolve(libsignalClientPath + "/java")) {
     name = "libsignal-client"
     dependencySubstitution {
-      substitute(module("im.molly:libsignal-client")).using(project(":client"))
-      substitute(module("im.molly:libsignal-android")).using(project(":android"))
+      substitute(module("org.signal:libsignal-client")).using(project(":client"))
+      substitute(module("org.signal:libsignal-android")).using(project(":android"))
     }
   }
 }

@@ -67,7 +67,6 @@ public class GroupPreJoinActionProcessor extends GroupActionProcessor {
     byte[]    groupId      = currentState.getCallInfoState().getCallRecipient().requireGroupId().getDecodedId();
     GroupCall groupCall    = webRtcInteractor.getCallManager().createGroupCall(groupId,
                                                                                SignalStore.internal().getGroupCallingServer(),
-                                                                               WebRtcUtil.getProxyInfo(),
                                                                                new byte[0],
                                                                                AUDIO_LEVELS_INTERVAL,dredDuration,
                                                                                RingRtcDynamicConfiguration.getAudioConfig(),
