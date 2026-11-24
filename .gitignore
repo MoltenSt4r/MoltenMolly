@@ -1,0 +1,14 @@
+*.iml
+.gradle
+.idea
+.DS_Store
+build
+captures
+.externalNativeBuild
+.cxx
+local.properties
+signing.properties
+.kotlin
+/prebuilts/
+/reproducible-builds/certs
+/reproducible-builds/outputs
