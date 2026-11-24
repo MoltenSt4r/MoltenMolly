@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.graphics.ColorUtils;
 
 import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.RequestManager;
@@ -39,6 +41,8 @@ import org.thoughtcrime.securesms.components.emoji.EmojiTextView;
 import org.thoughtcrime.securesms.components.mention.MentionAnnotation;
 import org.thoughtcrime.securesms.components.quotes.QuoteViewColorTheme;
 import org.thoughtcrime.securesms.conversation.MessageStyler;
+import org.thoughtcrime.securesms.conversation.colors.ChatColors;
+import org.thoughtcrime.securesms.conversation.colors.Colorizer;
 import org.thoughtcrime.securesms.conversation.v2.items.SenderNameWithLabelView;
 import org.thoughtcrime.securesms.database.model.Mention;
 import org.thoughtcrime.securesms.database.model.databaseprotos.BodyRangeList;
@@ -111,6 +115,7 @@ public class QuoteView extends ConstraintLayout implements RecipientForeverObser
   private           CornerMask      cornerMask;
   private           QuoteModel.Type quoteType;
   private           boolean         isWallpaperEnabled;
+  @Nullable private ChatColors      outgoingChatColors;
   @Nullable private MemberLabel     memberLabel;
 
   private int thumbHeight;
@@ -561,25 +566,51 @@ public class QuoteView extends ConstraintLayout implements RecipientForeverObser
     }
   }
 
+  public void setChatColors(@Nullable ChatColors chatColors) {
+    this.outgoingChatColors = chatColors;
+  }
+
   private void applyColorTheme() {
     QuoteViewColorTheme quoteViewColorTheme = getColorTheme();
+    boolean isOutgoing = messageType != MessageType.INCOMING && messageType != MessageType.STORY_REPLY_INCOMING;
+    boolean isPreview  = messageType == MessageType.PREVIEW || messageType == MessageType.STORY_REPLY_PREVIEW;
 
-    quoteBarView.setBackgroundColor(quoteViewColorTheme.getBarColor(getContext()));
-    setBackgroundColor(quoteViewColorTheme.getBackgroundColor(getContext()));
-    authorView.updateColors(
-        quoteViewColorTheme.getForegroundColor(getContext()),
-        quoteViewColorTheme.getLabelBackgroundColor(getContext())
-    );
-    bodyView.setTextColor(quoteViewColorTheme.getForegroundColor(getContext()));
+    int barColor             = quoteViewColorTheme.getBarColor(getContext());
+    int backgroundColor      = quoteViewColorTheme.getBackgroundColor(getContext());
+    int foregroundColor      = quoteViewColorTheme.getForegroundColor(getContext());
+    int labelBackgroundColor = quoteViewColorTheme.getLabelBackgroundColor(getContext());
+
+    if (isOutgoing && !isPreview && outgoingChatColors != null) {
+      if (Colorizer.isLightChatColors(outgoingChatColors)) {
+        foregroundColor      = 0xFF121212;
+        barColor             = 0xCC121212;
+        backgroundColor      = ColorUtils.setAlphaComponent(0xFF121212, 0x14);
+        labelBackgroundColor = ColorUtils.setAlphaComponent(0xFF121212, 0x1F);
+      } else {
+        foregroundColor      = Color.WHITE;
+        barColor             = Color.WHITE;
+        backgroundColor      = ColorUtils.setAlphaComponent(Color.WHITE, 0x26);
+        labelBackgroundColor = ColorUtils.setAlphaComponent(Color.WHITE, 0x33);
+      }
+    }
+
+    quoteBarView.setBackgroundColor(barColor);
+    setBackgroundColor(backgroundColor);
+    authorView.updateColors(foregroundColor, labelBackgroundColor);
+    bodyView.setTextColor(foregroundColor);
 
     if (attachmentNameViewStub.resolved()) {
-      attachmentNameViewStub.get().setTextColor(quoteViewColorTheme.getForegroundColor(getContext()));
+      attachmentNameViewStub.get().setTextColor(foregroundColor);
     }
-    mediaDescriptionText.setTextColor(quoteViewColorTheme.getForegroundColor(getContext()));
+    mediaDescriptionText.setTextColor(foregroundColor);
+
+    if (dismissStub.resolved()) {
+      dismissStub.get().setColorFilter(foregroundColor);
+    }
 
     if (missingLinkTextStub.resolved()) {
-      missingLinkTextStub.get().setTextColor(quoteViewColorTheme.getForegroundColor(getContext()));
-      missingLinkTextStub.get().setBackgroundColor(quoteViewColorTheme.getBackgroundColor(getContext()));
+      missingLinkTextStub.get().setTextColor(foregroundColor);
+      missingLinkTextStub.get().setBackgroundColor(backgroundColor);
     }
   }
 

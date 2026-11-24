@@ -1,8 +1,10 @@
 package org.thoughtcrime.securesms.conversation.colors
 
 import android.content.Context
+import android.graphics.Color
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import org.signal.core.models.ServiceId
 import org.signal.core.models.recipients.RecipientId
 import org.signal.core.ui.util.ThemeUtil
@@ -19,17 +21,62 @@ import org.signal.core.ui.R as CoreUiR
 interface Colorizer {
   @ColorInt
   fun getOutgoingBodyTextColor(context: Context): Int {
+    return getOutgoingBodyTextColor(context, null)
+  }
+
+  @ColorInt
+  fun getOutgoingBodyTextColor(context: Context, chatColors: ChatColors?): Int {
+    if (chatColors != null && isLightChatColors(chatColors)) {
+      return ContextCompat.getColor(context, CoreUiR.color.signal_light_colorNeutralInverse)
+    }
     return ContextCompat.getColor(context, R.color.conversation_outgoing_body_color)
   }
 
   @ColorInt
   fun getOutgoingFooterTextColor(context: Context): Int {
+    return getOutgoingFooterTextColor(context, null)
+  }
+
+  @ColorInt
+  fun getOutgoingFooterTextColor(context: Context, chatColors: ChatColors?): Int {
+    if (chatColors != null && isLightChatColors(chatColors)) {
+      return ColorUtils.setAlphaComponent(
+        ContextCompat.getColor(context, CoreUiR.color.signal_light_colorNeutralInverse),
+        0xB3
+      )
+    }
     return ContextCompat.getColor(context, R.color.conversation_outgoing_footer_color)
   }
 
   @ColorInt
   fun getOutgoingFooterIconColor(context: Context): Int {
-    return ContextCompat.getColor(context, R.color.conversation_outgoing_footer_color)
+    return getOutgoingFooterIconColor(context, null)
+  }
+
+  @ColorInt
+  fun getOutgoingFooterIconColor(context: Context, chatColors: ChatColors?): Int {
+    return getOutgoingFooterTextColor(context, chatColors)
+  }
+
+  companion object {
+    /**
+     * Returns true when dark foreground text has higher WCAG contrast than white text against [color].
+     */
+    @JvmStatic
+    fun isLightBubbleColor(@ColorInt color: Int): Boolean {
+      if (Color.alpha(color) == 0) return false
+      val opaque = ColorUtils.setAlphaComponent(color, 0xFF)
+      val lightContrast = ColorUtils.calculateContrast(Color.WHITE, opaque)
+      val darkContrast = ColorUtils.calculateContrast(0xFF121212.toInt(), opaque)
+      return darkContrast > lightContrast
+    }
+
+    @JvmStatic
+    fun isLightChatColors(chatColors: ChatColors): Boolean {
+      val colors = chatColors.getColors()
+      val lightCount = colors.count { isLightBubbleColor(it) }
+      return lightCount * 2 > colors.size
+    }
   }
 
   @ColorInt

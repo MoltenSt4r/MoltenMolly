@@ -57,6 +57,9 @@
         <item name="signal_button_secondary_text">@color/dynamic_primary_light</item>
         <item name="reactions_overlay_any_emoji_background">@color/dynamic_outline_variant_light</item>
         <item name="reactions_overlay_any_emoji_foreground">@color/dynamic_on_surface_light</item>
+        <item name="reactions_pill_selected_color">?attr/colorPrimaryContainer</item>
+        <item name="quote_view_bar_incoming_normal">?attr/colorPrimary</item>
+        <item name="quote_view_bar_incoming_wallpaper">?attr/colorPrimary</item>
         <item name="message_request_bar_background_normal">@color/dynamic_surface_container_light</item>
         <item name="message_request_bar_acceptForeground_normal">@color/dynamic_on_secondary_container_light</item>
         <item name="switchThemeOverlay">@style/ThemeOverlay.MaterialSwitch.Dynamic</item>
@@ -129,6 +132,9 @@
         <item name="signal_button_secondary_text">@color/dynamic_primary_dark</item>
         <item name="reactions_overlay_any_emoji_background">@color/dynamic_outline_variant_dark</item>
         <item name="reactions_overlay_any_emoji_foreground">@color/dynamic_on_surface_dark</item>
+        <item name="reactions_pill_selected_color">?attr/colorPrimaryContainer</item>
+        <item name="quote_view_bar_incoming_normal">?attr/colorPrimary</item>
+        <item name="quote_view_bar_incoming_wallpaper">?attr/colorPrimary</item>
         <item name="message_request_bar_background_normal">@color/dynamic_surface_container_dark</item>
         <item name="message_request_bar_acceptForeground_normal">@color/dynamic_on_secondary_container_dark</item>
         <item name="switchThemeOverlay">@style/ThemeOverlay.MaterialSwitch.Dynamic</item>

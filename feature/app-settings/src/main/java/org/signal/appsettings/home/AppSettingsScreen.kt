@@ -72,6 +72,7 @@ object AppSettingsTestTags {
   const val ROW_BACKUPS = "row-backups"
   const val ROW_NETWORK = "row-network"
   const val ROW_DATA_AND_STORAGE = "row-data-and-storage"
+  const val ROW_PLUGINS = "row-plugins"
   const val ROW_APP_UPDATES = "row-app-updates"
   const val ROW_HELP = "row-help"
   const val ROW_INVITE = "row-invite"
@@ -303,6 +304,17 @@ fun AppSettingsScreen(
             modifier = Modifier
               .selectionHighlight(selectedRoute is AppSettingsRoute.DataAndStorageRoute)
               .testTag(AppSettingsTestTags.ROW_DATA_AND_STORAGE)
+          )
+        }
+
+        item {
+          Rows.TextRow(
+            text = stringResource(R.string.AppSettingsScreen__plugins),
+            icon = SignalIcons.Settings.painter,
+            onClick = { onEvent(AppSettingsEvent.PluginsClicked) },
+            modifier = Modifier
+              .selectionHighlight(selectedRoute is AppSettingsRoute.PluginsRoute)
+              .testTag(AppSettingsTestTags.ROW_PLUGINS)
           )
         }
 

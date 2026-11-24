@@ -20,6 +20,8 @@ import org.thoughtcrime.securesms.components.emoji.EmojiImageView;
 import org.signal.emoji.EmojiUtil;
 import org.thoughtcrime.securesms.database.model.ReactionRecord;
 import org.thoughtcrime.securesms.recipients.Recipient;
+import org.thoughtcrime.securesms.util.DynamicTheme;
+import org.signal.core.ui.util.ThemeUtil;
 import org.signal.core.ui.util.ViewUtil;
 
 import java.util.ArrayList;
@@ -214,7 +216,10 @@ public class ReactionsConversationView extends LinearLayout {
 
     if (reaction.userWasSender) {
       root.setBackground(ContextCompat.getDrawable(context, R.drawable.reaction_pill_background_selected));
-      countView.setTextColor(ContextCompat.getColor(context, R.color.reactions_pill_selected_text_color));
+      int selectedTextColor = DynamicTheme.useDynamicColors()
+                              ? ThemeUtil.getThemedColor(context, com.google.android.material.R.attr.colorOnPrimaryContainer)
+                              : ContextCompat.getColor(context, R.color.reactions_pill_selected_text_color);
+      countView.setTextColor(selectedTextColor);
     } else {
       root.setBackground(ContextCompat.getDrawable(context, R.drawable.reaction_pill_background));
     }

@@ -258,7 +258,7 @@ open class V2ConversationItemTextOnlyViewHolder<Model : MappingModel<Model>>(
       hasProcessedSupportedPayload = true
     }
 
-    if (hasProcessedSupportedPayload && V2Payload.WALLPAPER !in payload) {
+    if (hasProcessedSupportedPayload && V2Payload.WALLPAPER !in payload && V2Payload.CHAT_COLORS !in payload) {
       return
     }
 
@@ -432,12 +432,13 @@ open class V2ConversationItemTextOnlyViewHolder<Model : MappingModel<Model>>(
 
     if (conversationMessage.hasStyleLinks()) {
       val isReleaseNotes = conversationMessage.threadRecipient.isReleaseNotes
-      val linkColor = if (isReleaseNotes) {
+      val isOutgoing = conversationMessage.messageRecord.isOutgoing
+      val linkColor = if (isReleaseNotes || isOutgoing) {
         themeDelegate.getBodyTextColor(conversationMessage)
       } else {
         ThemeUtil.getThemedColor(context, R.attr.signal_accent_primary)
       }
-      val underline = isReleaseNotes
+      val underline = isReleaseNotes || isOutgoing
       messageBody.getSpans(0, messageBody.length, PlaceholderURLSpan::class.java).forEach { placeholder ->
         val start = messageBody.getSpanStart(placeholder)
         val end = messageBody.getSpanEnd(placeholder)

@@ -82,6 +82,7 @@ class ConversationAdapterV2(
   }
 
   private val _selected = hashSetOf<MultiselectPart>()
+  private var chatColors: ChatColors? = null
   private var adapterPosition = RecyclerView.NO_POSITION
 
   override val selectedItems: Set<MultiselectPart>
@@ -284,6 +285,16 @@ class ConversationAdapterV2(
       Log.d(TAG, "Resetting adapter due to wallpaper change.")
       this.hasWallpaper = hasWallpaper
       notifyItemRangeChanged(0, itemCount, V2Payload.WALLPAPER)
+      true
+    } else {
+      false
+    }
+  }
+
+  fun onChatColorsChanged(chatColors: ChatColors): Boolean {
+    return if (this.chatColors != chatColors) {
+      this.chatColors = chatColors
+      notifyItemRangeChanged(0, itemCount, V2Payload.CHAT_COLORS)
       true
     } else {
       false

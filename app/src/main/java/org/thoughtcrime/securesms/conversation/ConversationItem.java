@@ -953,19 +953,21 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
     bodyText.setLinkTextColor(colorizer.getIncomingBodyTextColor(context, hasWallpaper));
 
     if (messageRecord.isOutgoing() && !messageRecord.isRemoteDelete()) {
-      bodyBubble.getBackground().setColorFilter(recipient.getChatColors().getChatBubbleColorFilter());
-      bodyText.setTextColor(colorizer.getOutgoingBodyTextColor(context));
-      bodyText.setLinkTextColor(colorizer.getOutgoingBodyTextColor(context));
-      footer.setTextColor(colorizer.getOutgoingFooterTextColor(context));
-      footer.setIconColor(colorizer.getOutgoingFooterIconColor(context));
-      footer.setRevealDotColor(colorizer.getOutgoingFooterIconColor(context));
+      ChatColors chatColors = recipient.getChatColors();
+      bodyBubble.getBackground().setColorFilter(chatColors.getChatBubbleColorFilter());
+      bodyText.setTextColor(colorizer.getOutgoingBodyTextColor(context, chatColors));
+      bodyText.setLinkTextColor(colorizer.getOutgoingBodyTextColor(context, chatColors));
+      footer.setTextColor(colorizer.getOutgoingFooterTextColor(context, chatColors));
+      footer.setIconColor(colorizer.getOutgoingFooterIconColor(context, chatColors));
+      footer.setRevealDotColor(colorizer.getOutgoingFooterIconColor(context, chatColors));
       footer.setOnlyShowSendingStatus(false, messageRecord);
     } else if (messageRecord.isRemoteDelete()) {
       if (messageRecord.isOutgoing() && hasWallpaper) {
-        bodyBubble.getBackground().setColorFilter(recipient.getChatColors().getChatBubbleColorFilter());
-        footer.setTextColor(colorizer.getOutgoingFooterTextColor(context));
-        footer.setIconColor(colorizer.getOutgoingFooterIconColor(context));
-        footer.setRevealDotColor(colorizer.getOutgoingFooterIconColor(context));
+        ChatColors chatColors = recipient.getChatColors();
+        bodyBubble.getBackground().setColorFilter(chatColors.getChatBubbleColorFilter());
+        footer.setTextColor(colorizer.getOutgoingFooterTextColor(context, chatColors));
+        footer.setIconColor(colorizer.getOutgoingFooterIconColor(context, chatColors));
+        footer.setRevealDotColor(colorizer.getOutgoingFooterIconColor(context, chatColors));
       } else if (hasWallpaper) {
         bodyBubble.getBackground().setColorFilter(getDefaultBubbleColor(true), PorterDuff.Mode.SRC_IN);
         footer.setTextColor(ThemeUtil.getThemedColor(context, R.attr.signal_text_secondary));
@@ -1866,6 +1868,7 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
                          false,
                          conversationMessage.getQuoteMemberLabel());
 
+      quoteView.setChatColors(conversationRecipient.getChatColors());
       quoteView.setWallpaperEnabled(hasWallpaper);
       quoteView.setVisibility(View.VISIBLE);
       quoteView.setTextSize(TypedValue.COMPLEX_UNIT_SP, SignalStore.settings().getMessageQuoteFontSize(context));

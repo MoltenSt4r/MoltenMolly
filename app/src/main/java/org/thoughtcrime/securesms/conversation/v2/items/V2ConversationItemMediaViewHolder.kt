@@ -38,6 +38,9 @@ class V2ConversationItemMediaViewHolder<Model : MappingModel<Model>>(
 
     if (payload.isNotEmpty()) {
       super.bind(model)
+      if (V2Payload.WALLPAPER in payload || V2Payload.CHAT_COLORS in payload) {
+        presentQuote()
+      }
       return
     }
 
@@ -103,6 +106,7 @@ class V2ConversationItemMediaViewHolder<Model : MappingModel<Model>>(
       conversationMessage.quoteMemberLabel
     )
 
+    quoteView.setChatColors(conversationContext.getChatColorsData().chatColors)
     quoteView.setWallpaperEnabled(conversationContext.hasWallpaper())
     quoteView.setTextSize(TypedValue.COMPLEX_UNIT_SP, SignalStore.settings.getMessageQuoteFontSize(context).toFloat())
 

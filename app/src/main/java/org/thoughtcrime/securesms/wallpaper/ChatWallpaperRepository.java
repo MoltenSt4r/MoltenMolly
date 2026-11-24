@@ -10,6 +10,7 @@ import org.signal.core.util.concurrent.SignalExecutors;
 import org.thoughtcrime.securesms.conversation.colors.ChatColors;
 import org.thoughtcrime.securesms.conversation.colors.ChatColorsPalette;
 import org.thoughtcrime.securesms.database.SignalDatabase;
+import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.recipients.Recipient;
 import org.signal.core.util.concurrent.SerialExecutor;
@@ -41,7 +42,7 @@ class ChatWallpaperRepository {
     } else if (SignalStore.wallpaper().hasWallpaperSet()) {
       return Objects.requireNonNull(SignalStore.wallpaper().getWallpaper()).getAutoChatColors();
     } else {
-      return ChatColorsPalette.Bubbles.getDefault().withId(ChatColors.Id.Auto.INSTANCE);
+      return ChatColorsPalette.Bubbles.getDefault(AppDependencies.application).withId(ChatColors.Id.Auto.INSTANCE);
     }
   }
 

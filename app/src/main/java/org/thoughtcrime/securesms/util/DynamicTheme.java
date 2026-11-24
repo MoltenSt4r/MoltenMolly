@@ -86,8 +86,12 @@ public class DynamicTheme {
 
   public static @ColorInt int resolveColor(@NonNull Context context, int colorRef) {
     int resId = useDynamicColors() ? dynamicTheme : regularTheme;
-    ContextThemeWrapper themeWrapper = new ContextThemeWrapper(context, resId);
-    return ThemeUtil.getThemedColor(context, colorRef, themeWrapper.getTheme());
+    Configuration config = new Configuration(context.getResources().getConfiguration());
+    int nightMask = isDarkTheme(context) ? Configuration.UI_MODE_NIGHT_YES : Configuration.UI_MODE_NIGHT_NO;
+    config.uiMode = (config.uiMode & ~Configuration.UI_MODE_NIGHT_MASK) | nightMask;
+    Context themedContext = context.createConfigurationContext(config);
+    ContextThemeWrapper themeWrapper = new ContextThemeWrapper(themedContext, resId);
+    return ThemeUtil.getThemedColor(themeWrapper, colorRef, themeWrapper.getTheme());
   }
 
   public static boolean systemThemeAvailable() {

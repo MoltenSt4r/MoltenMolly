@@ -84,6 +84,7 @@ class AppSettingsViewModel(
       }
       AppSettingsEvent.NetworkClicked -> parentEventEmitter.navigateTo(AppSettingsRoute.NetworkRoute)
       AppSettingsEvent.DataAndStorageClicked -> parentEventEmitter.navigateTo(AppSettingsRoute.DataAndStorageRoute.DataAndStorage)
+      AppSettingsEvent.PluginsClicked -> parentEventEmitter.navigateTo(AppSettingsRoute.PluginsRoute.Plugins)
       AppSettingsEvent.AppUpdatesClicked -> parentEventEmitter.navigateTo(AppSettingsRoute.AppUpdates)
       AppSettingsEvent.HelpClicked -> parentEventEmitter.navigateTo(AppSettingsRoute.HelpRoute.Settings())
       AppSettingsEvent.InviteClicked -> parentEventEmitter.navigateTo(AppSettingsRoute.Invite)

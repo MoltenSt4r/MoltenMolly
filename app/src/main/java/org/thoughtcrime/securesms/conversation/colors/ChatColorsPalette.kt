@@ -1,5 +1,8 @@
 package org.thoughtcrime.securesms.conversation.colors
 
+import android.content.Context
+import org.thoughtcrime.securesms.util.DynamicTheme
+
 /**
  * Namespaced collection of supported bubble colors and name colors.
  */
@@ -154,6 +157,27 @@ object ChatColorsPalette {
 
     @JvmStatic
     val default = ULTRAMARINE
+
+    /**
+     * Returns the default bubble [ChatColors], following Monet dynamic colors when enabled.
+     */
+    @JvmStatic
+    fun getDefault(context: Context): ChatColors {
+      val useDynamic = try {
+        DynamicTheme.useDynamicColors()
+      } catch (_: Throwable) {
+        false
+      }
+      if (useDynamic) {
+        val colorAttr = if (DynamicTheme.isDarkTheme(context)) {
+          com.google.android.material.R.attr.colorPrimaryContainer
+        } else {
+          com.google.android.material.R.attr.colorPrimary
+        }
+        return ChatColors.forColor(ChatColors.Id.BuiltIn, DynamicTheme.resolveColor(context, colorAttr))
+      }
+      return default
+    }
 
     /*
      * If updating this list of colors, make sure to update the backup import/export colors as well.

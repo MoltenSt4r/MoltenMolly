@@ -26,6 +26,7 @@ import org.thoughtcrime.securesms.PassphraseRequiredActivity
 import org.thoughtcrime.securesms.components.enableSettingsEdgeToEdge
 import org.thoughtcrime.securesms.components.settings.app.appearance.registerAppearanceRoutes
 import org.thoughtcrime.securesms.components.settings.app.chats.registerChatsRoutes
+import org.thoughtcrime.securesms.components.settings.app.plugins.registerPluginsRoutes
 import org.thoughtcrime.securesms.components.settings.app.privacy.registerPrivacyRoutes
 import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.main.EmptyDetailScreen
@@ -72,6 +73,7 @@ class AppSettingsNavigationActivity : PassphraseRequiredActivity() {
             registerAppearanceRoutes(router::onEvent)
             registerChatsRoutes(router::onEvent)
             registerPrivacyRoutes(router::onEvent)
+            registerPluginsRoutes(router::onEvent)
 
             // TODO Temporary escape hatch while most destinations are unregistered here; remove before the flag ships.
             detailEntry<AppSettingsRoute.InternalRoute.Internal> {

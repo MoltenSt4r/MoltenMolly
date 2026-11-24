@@ -8,7 +8,8 @@ import org.thoughtcrime.securesms.wallpaper.ChatWallpaper
 data class ChatColorSelectionState(
   val wallpaper: ChatWallpaper? = null,
   val chatColors: ChatColors? = null,
-  private val chatColorOptions: List<ChatColors> = listOf()
+  private val chatColorOptions: List<ChatColors> = listOf(),
+  val defaultChatColors: ChatColors = ChatColorsPalette.Bubbles.default.withId(ChatColors.Id.Auto)
 ) {
 
   val chatColorModels: MappingModelList
@@ -30,7 +31,7 @@ data class ChatColorSelectionState(
       )
     } else {
       ChatColorMappingModel(
-        ChatColorsPalette.Bubbles.default.withId(ChatColors.Id.Auto),
+        defaultChatColors,
         chatColors?.id == ChatColors.Id.Auto,
         true
       )

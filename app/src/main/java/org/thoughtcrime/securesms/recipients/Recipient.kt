@@ -441,7 +441,7 @@ class Recipient(
 
   /** The chat color to use when the "automatic" chat color setting is active, which derives a color from the wallpaper. */
   private val autoChatColor: ChatColors
-    get() = wallpaper?.autoChatColors ?: ChatColorsPalette.Bubbles.default.withId(Auto)
+    get() = wallpaper?.autoChatColors ?: ChatColorsPalette.Bubbles.getDefault(AppDependencies.application).withId(Auto)
 
   /** A fully resolved copy of this recipient, if needed. */
   private val resolved: Recipient

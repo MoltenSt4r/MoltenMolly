@@ -48,6 +48,7 @@ sealed interface AppSettingsRoute : Parcelable, DetailNavKey {
       is BackupsRoute.Remote,
       DataAndStorageRoute.DataAndStorage,
       DataAndStorageRoute.Proxy,
+      PluginsRoute.Plugins,
       ChangeNumberRoute.Start,
       AppUpdates,
       is HelpRoute.Settings,
@@ -473,5 +474,18 @@ sealed interface AppSettingsRoute : Parcelable, DetailNavKey {
 
     @Serializable
     data object PinDiffers : ChangeNumberRoute
+  }
+
+  @Serializable
+  @Parcelize
+  sealed interface PluginsRoute : AppSettingsRoute {
+    @Serializable
+    data object Plugins : PluginsRoute
+
+    @Serializable
+    data class Permissions(val pluginId: String) : PluginsRoute
+
+    @Serializable
+    data class AuditLog(val pluginId: String? = null) : PluginsRoute
   }
 }

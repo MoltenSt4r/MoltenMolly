@@ -195,6 +195,11 @@ public class ApplicationContext extends Application implements AppForegroundObse
 
     super.onCreate();
 
+    if (im.molly.plugins.PluginProcessGuard.isSandboxProcess(this)) {
+      Log.i(TAG, "Plugin sandbox process started; skipping SQLCipher, MasterSecret, KeyStore, and SignalDatabase initialization.");
+      return;
+    }
+
     SqlCipherLibraryLoader.load();
     DynamicTheme.setDefaultDayNightMode(this);
     ScreenLockController.enableAutoLock(PlainTextKeyValueStore.getBiometricScreenLockEnabled());

@@ -64,6 +64,9 @@ sealed interface AppSettingsEvent {
   /** The user tapped the data and storage row. */
   data object DataAndStorageClicked : AppSettingsEvent
 
+  /** The user tapped the plugins row. */
+  data object PluginsClicked : AppSettingsEvent
+
   /** The user tapped the app updates row. */
   data object AppUpdatesClicked : AppSettingsEvent
 

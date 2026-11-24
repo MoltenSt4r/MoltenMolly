@@ -6,12 +6,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import org.signal.core.models.recipients.RecipientId
 import org.thoughtcrime.securesms.conversation.colors.ChatColors
+import org.thoughtcrime.securesms.conversation.colors.ChatColorsPalette
 import org.thoughtcrime.securesms.util.SingleLiveEvent
 import org.thoughtcrime.securesms.util.livedata.Store
 
-class ChatColorSelectionViewModel(private val repository: ChatColorSelectionRepository) : ViewModel() {
+class ChatColorSelectionViewModel(
+  private val repository: ChatColorSelectionRepository,
+  defaultChatColors: ChatColors = ChatColorsPalette.Bubbles.default.withId(ChatColors.Id.Auto)
+) : ViewModel() {
 
-  private val store = Store<ChatColorSelectionState>(ChatColorSelectionState())
+  private val store = Store<ChatColorSelectionState>(ChatColorSelectionState(defaultChatColors = defaultChatColors))
   private val chatColors = ChatColorsOptionsLiveData()
   private val internalEvents = SingleLiveEvent<Event>()
 
@@ -50,14 +54,18 @@ class ChatColorSelectionViewModel(private val repository: ChatColorSelectionRepo
     repository.delete(chatColors, this::refresh)
   }
 
-  class Factory(private val repository: ChatColorSelectionRepository) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T = requireNotNull(modelClass.cast(ChatColorSelectionViewModel(repository)))
+  class Factory(
+    private val repository: ChatColorSelectionRepository,
+    private val defaultChatColors: ChatColors
+  ) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T = requireNotNull(modelClass.cast(ChatColorSelectionViewModel(repository, defaultChatColors)))
   }
 
   companion object {
     fun getOrCreate(activity: FragmentActivity, recipientId: RecipientId?): ChatColorSelectionViewModel {
       val repository = ChatColorSelectionRepository.create(activity, recipientId)
-      val viewModelFactory = Factory(repository)
+      val defaultChatColors = ChatColorsPalette.Bubbles.getDefault(activity).withId(ChatColors.Id.Auto)
+      val viewModelFactory = Factory(repository, defaultChatColors)
 
       return ViewModelProvider(activity, viewModelFactory).get(ChatColorSelectionViewModel::class.java)
     }

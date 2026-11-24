@@ -234,6 +234,7 @@ class ConversationViewModel(
   val plaintextExportState: StateFlow<PlaintextExportState> = _plaintextExportState
 
   private val plaintextExportCancelled = AtomicBoolean(false)
+  private val appearanceRefreshTrigger = BehaviorSubject.createDefault(Unit)
 
   init {
     disposables += recipient
@@ -247,7 +248,7 @@ class ConversationViewModel(
       }
 
     val chatColorsDataObservable: Observable<ChatColorsDrawable.ChatColorsData> = Observable.combineLatest(
-      recipient.map { it.chatColors }.distinctUntilChanged(),
+      Observable.combineLatest(recipient, appearanceRefreshTrigger) { r, _ -> r.chatColors }.distinctUntilChanged(),
       chatBounds.distinctUntilChanged()
     ) { chatColors, bounds ->
       val chatMask = chatColors.chatBubbleMask
@@ -520,6 +521,10 @@ class ConversationViewModel(
   fun onDismissReview() {
     val recipientId = recipientSnapshot?.id ?: return
     repository.dismissRequestReviewState(recipientId)
+  }
+
+  fun refreshAppearance() {
+    appearanceRefreshTrigger.onNext(Unit)
   }
 
   override fun onCleared() {

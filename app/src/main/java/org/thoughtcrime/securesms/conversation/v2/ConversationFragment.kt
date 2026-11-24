@@ -1265,6 +1265,12 @@ class ConversationFragment :
     // Reselects which gifs play, since a gif whose tapped playback was dropped on pause may now autoplay.
     binding.conversationItemRecycler.requestLayout()
 
+    viewModel.refreshAppearance()
+    viewModel.recipientSnapshot?.let { recipient ->
+      presentWallpaper(recipient)
+      presentChatColors(recipient.chatColors)
+    }
+
     groupCallViewModel.peekGroupCall()
 
     if (!args.conversationScreenType.isInBubble) {
@@ -2408,6 +2414,9 @@ class ConversationFragment :
 
   private fun presentChatColors(chatColors: ChatColors) {
     recyclerViewColorizer.setChatColors(chatColors)
+    if (adapter.onChatColorsChanged(chatColors)) {
+      binding.conversationItemRecycler.invalidateItemDecorations()
+    }
     stickerConfirmation.sendColor = ComposeColor(chatColors.asSingleColor())
     binding.scrollToMention.setUnreadCountBackgroundTint(chatColors.asSingleColor())
     binding.scrollToBottom.setUnreadCountBackgroundTint(chatColors.asSingleColor())

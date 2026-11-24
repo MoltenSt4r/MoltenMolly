@@ -107,6 +107,13 @@
             app:popEnterAnim="@anim/fragment_close_enter"
             app:popExitAnim="@anim/fragment_close_exit" />
         <action
+            android:id="@+id/action_appSettingsFragment_to_pluginsSettingsFragment"
+            app:destination="@id/pluginsSettingsFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+        <action
             android:id="@+id/action_appSettingsFragment_to_manageProfileActivity"
             app:destination="@id/manageProfileActivity"
             app:enterAnim="@anim/fragment_open_enter"
@@ -1484,5 +1491,46 @@
 
     <include app:graph="@navigation/username_link_settings" />
     <include app:graph="@navigation/story_privacy_settings" />
+
+    <fragment
+        android:id="@+id/pluginsSettingsFragment"
+        android:name="org.thoughtcrime.securesms.components.settings.app.plugins.PluginsSettingsFragment"
+        android:label="plugins_settings_fragment">
+
+        <action
+            android:id="@+id/action_pluginsSettingsFragment_to_pluginPermissionsFragment"
+            app:destination="@id/pluginPermissionsFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+
+        <action
+            android:id="@+id/action_pluginsSettingsFragment_to_pluginAuditLogFragment"
+            app:destination="@id/pluginAuditLogFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/pluginPermissionsFragment"
+        android:name="org.thoughtcrime.securesms.components.settings.app.plugins.PluginPermissionsFragment"
+        android:label="plugin_permissions_fragment">
+
+        <action
+            android:id="@+id/action_pluginPermissionsFragment_to_pluginAuditLogFragment"
+            app:destination="@id/pluginAuditLogFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/pluginAuditLogFragment"
+        android:name="org.thoughtcrime.securesms.components.settings.app.plugins.PluginAuditLogFragment"
+        android:label="plugin_audit_log_fragment" />
 
 </navigation>

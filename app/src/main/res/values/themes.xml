@@ -350,13 +350,13 @@
         <item name="quote_view_foreground_incoming_wallpaper">@color/signal_colorNeutralInverse</item>
         <item name="quote_view_background_outgoing_wallpaper">@color/signal_neutralSurface</item>
         <item name="quote_view_bar_outgoing_wallpaper">@color/signal_colorOnCustom</item>
-        <item name="quote_view_foreground_outgoing_wallpaper">?attr/colorOnSurface</item>
+        <item name="quote_view_foreground_outgoing_wallpaper">@color/signal_colorOnCustom</item>
         <item name="quote_view_background_incoming_normal">@color/signal_colorTransparent3</item>
-        <item name="quote_view_bar_incoming_normal">@color/signal_colorOnCustom</item>
+        <item name="quote_view_bar_incoming_normal">?attr/colorPrimary</item>
         <item name="quote_view_foreground_incoming_normal">?attr/colorOnSurface</item>
         <item name="quote_view_background_outgoing_normal">@color/signal_colorTransparent4</item>
         <item name="quote_view_bar_outgoing_normal">@color/signal_colorOnCustom</item>
-        <item name="quote_view_foreground_outgoing_normal">?attr/colorOnSurface</item>
+        <item name="quote_view_foreground_outgoing_normal">@color/signal_colorOnCustom</item>
         <item name="quote_view_label_background_incoming_normal">@color/signal_colorOnSurface_8</item>
         <item name="quote_view_label_background_incoming_wallpaper">@color/signal_colorOnSurface_8</item>
         <item name="quote_view_label_background_outgoing_normal">@color/transparent_white_36</item>

@@ -48,9 +48,10 @@ class V2ConversationItemTheme(
       return ContextCompat.getColor(context, R.color.release_notes_bubble_text)
     }
 
+    val chatColors = conversationContext.getChatColorsData().chatColors
     return getColor(
       conversationMessage,
-      conversationContext.getColorizer()::getOutgoingFooterTextColor,
+      { ctx -> conversationContext.getColorizer().getOutgoingFooterTextColor(ctx, chatColors) },
       conversationContext.getColorizer()::getIncomingFooterTextColor
     )
   }
@@ -62,9 +63,10 @@ class V2ConversationItemTheme(
     if (!conversationMessage.messageRecord.isOutgoing && conversationMessage.threadRecipient.isReleaseNotes) {
       return ContextCompat.getColor(context, R.color.release_notes_bubble_text)
     }
+    val chatColors = conversationContext.getChatColorsData().chatColors
     return getColor(
       conversationMessage,
-      conversationContext.getColorizer()::getOutgoingBodyTextColor,
+      { ctx -> conversationContext.getColorizer().getOutgoingBodyTextColor(ctx, chatColors) },
       conversationContext.getColorizer()::getIncomingBodyTextColor
     )
   }
