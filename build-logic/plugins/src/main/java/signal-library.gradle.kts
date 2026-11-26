@@ -28,6 +28,13 @@ android {
 
   testOptions {
     targetSdk = libs.versions.targetSdk.get().toInt()
+    unitTests.all { task ->
+      task.systemProperty(
+        "robolectric.dependency.repo.url",
+        System.getProperty("robolectric.dependency.repo.url")
+          ?: "https://maven-central.storage-download.googleapis.com/maven2"
+      )
+    }
   }
 
   compileOptions {

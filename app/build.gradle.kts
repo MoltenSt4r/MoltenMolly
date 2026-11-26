@@ -100,6 +100,11 @@ android {
       // MOLLY: Reduce memory pressure by limiting the number of test classes per runner
       all { task ->
         task.forkEvery = 64
+        task.systemProperty(
+          "robolectric.dependency.repo.url",
+          System.getProperty("robolectric.dependency.repo.url")
+            ?: "https://maven-central.storage-download.googleapis.com/maven2"
+        )
       }
     }
   }
